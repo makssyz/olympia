@@ -1,11 +1,11 @@
 public class Athlete {
 
     private final int id;
-    private String name;
-    private int birthyear;
-    private String gender;
-    private int height;
-    private int weight;
+    private final String name;
+    private final int birthyear;
+    private final String gender;
+    private final int height;
+    private final int weight;
 
     Athlete(int id, String name, int birthyear, String gender, int height, int weight) {
         this.id = id;
