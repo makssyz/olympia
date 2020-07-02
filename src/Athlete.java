@@ -15,4 +15,16 @@ public class Athlete {
         this.height = height;
         this.weight = weight;
     }
+
+    @Override
+    public String toString() {
+        return "Athlete{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", birthyear=" + birthyear +
+                ", gender='" + gender + '\'' +
+                ", height=" + height +
+                ", weight=" + weight +
+                '}';
+    }
 }
