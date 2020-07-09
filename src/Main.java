@@ -1,19 +1,23 @@
-public class Main {
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+public class Main extends Application {
 
     public static void main(String[] args) {
-        Athlete athlete = new Athlete(1, "Jimmy Bob",
-                1975, "M", 178, 81);
-
-        System.out.println(athlete);
-
-        Team team = new Team("Germany");
-
-        team.addAthlete(athlete);
-
-        System.out.println(team);
+        FileLoader.loadData();
     }
 
-    private static void loadData() {
+    @Override
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("fxml_example.fxml"));
 
+        Scene scene = new Scene(root, 300, 275);
+
+        stage.setTitle("FXML Welcome");
+        stage.setScene(scene);
+        stage.show();
     }
 }
