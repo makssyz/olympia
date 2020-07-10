@@ -29,6 +29,9 @@ public class OlympicGame{
     public void addSport(Sport sport) {
         sports.addWhenMissing(sport); }
 
+    public void addTeam(Team team) {
+        teams.addWhenMissing(team); }
+
     @Override
     public boolean equals(Object object) {
         if (object == this) {

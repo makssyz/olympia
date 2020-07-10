@@ -52,6 +52,8 @@ public class FileLoader {
             Team teamObject = new Team(team);
             teamObject = teamList.addWhenMissing(teamObject);
             teamObject.setNoc(nocObject);
+            nocObject.addTeam(teamObject);
+            olympicGame.addTeam(teamObject);
 
             Sport sportObject = new Sport(sport);
             sportObject = sportList.addWhenMissing(sportObject);

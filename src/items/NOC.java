@@ -12,7 +12,6 @@ public class NOC{
 
     public void addTeam(Team team) {
         teams.addWhenMissing(team);
-        team.setNoc(this);
     }
 
     @Override
