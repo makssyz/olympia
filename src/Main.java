@@ -3,11 +3,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import lists.MasterList;
 
 public class Main extends Application {
 
     public static void main(String[] args) {
-        FileLoader.loadData();
+        MasterList masterList = FileLoader.loadData();
     }
 
     @Override

@@ -3,20 +3,23 @@ import lists.*;
 
 import java.io.InputStream;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class FileLoader {
-    public static void loadData() {
-        InputStream datafile = FileLoader.class.getResourceAsStream("smol.db");
+    public static MasterList loadData() {
+        InputStream datafile = FileLoader.class.getResourceAsStream("olympic.db");
         Scanner reader = new Scanner(datafile);
         reader.nextLine();
 
-        AthleteList athleteList = new AthleteList();
-        EventList eventList = new EventList();
-        NOCList nocList = new NOCList();
-        OlympicGameList olympicGameList = new OlympicGameList();
-        SportList sportList = new SportList();
-        TeamList teamList = new TeamList();
+        TreeMap<Integer, Athlete> athleteList = new TreeMap<>();
+        TreeMap<String, Event> eventList = new TreeMap<>();
+        TreeMap<String, NOC> nocList = new TreeMap<>();
+        TreeMap<String, OlympicGame> olympicGameList = new TreeMap<>();
+        TreeMap<String, Sport> sportList = new TreeMap<>();
+        TreeMap<String, Team> teamList = new TreeMap<>();
         MedalList medalList = new MedalList();
+        MasterList masterList = new MasterList(athleteList, eventList, nocList, olympicGameList, sportList, teamList, medalList);
+        Object value;
 
         while (reader.hasNextLine()) {
             String line = reader.nextLine();
@@ -44,28 +47,49 @@ public class FileLoader {
             medal = lineArray[14];
 
             OlympicGame olympicGame = new OlympicGame(game, year, season, city);
-            olympicGame = olympicGameList.addWhenMissing(olympicGame);
+            value = olympicGameList.putIfAbsent(olympicGame.getName(), olympicGame);
+            if (value != null) {
+                olympicGame = (OlympicGame) value;
+            }
 
             NOC nocObject = new NOC(noc);
-            nocObject = nocList.addWhenMissing(nocObject);
+            value = nocList.putIfAbsent(nocObject.getName(), nocObject);
+            if (value != null) {
+                nocObject = (NOC) value;
+            }
 
             Team teamObject = new Team(team);
-            teamObject = teamList.addWhenMissing(teamObject);
+            value = teamList.putIfAbsent(teamObject.getName(), teamObject);
+            if (value != null) {
+                teamObject = (Team) value;
+            }
             teamObject.setNoc(nocObject);
+            nocObject.addTeam(teamObject);
+            olympicGame.addTeam(teamObject);
 
             Sport sportObject = new Sport(sport);
-            sportObject = sportList.addWhenMissing(sportObject);
+            value = sportList.putIfAbsent(sportObject.getName(), sportObject);
+            if (value != null) {
+                sportObject = (Sport) value;
+            }
             olympicGame.addSport(sportObject);
 
             Event eventObject = new Event(event);
-            eventObject = eventList.addWhenMissing(eventObject);
+            value = eventList.putIfAbsent(eventObject.getName(), eventObject);
+            if (value != null) {
+                eventObject = (Event) value;
+            }
             olympicGame.addEvent(eventObject);
             eventObject.setOlympicGame(olympicGame);
             sportObject.addEvent(eventObject);
             eventObject.setSport(sportObject);
 
             Athlete athlete = new Athlete(id, name, age, year, gender, height, weight);
-            athlete = athleteList.addWhenMissing(athlete);
+            athleteList.putIfAbsent(athlete.getId(), athlete);
+            value = athleteList.putIfAbsent(athlete.getId(), athlete);
+            if (value != null) {
+                athlete = (Athlete) value;
+            }
             eventObject.addAthlete(athlete);
             teamObject.addAthlete(athlete);
 
@@ -76,7 +100,14 @@ public class FileLoader {
                 athlete.addMedal(medalObject);
             }
         }
-
         reader.close();
+        return masterList;
     }
+
+//    private static Object putReference(TreeMap<>) {
+//        value = nocList.putIfAbsent(nocObject.getName(), nocObject);
+//        if (value != null) {
+//            nocObject = (NOC) value;
+//        }
+//    }
 }

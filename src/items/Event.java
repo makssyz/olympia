@@ -1,36 +1,24 @@
 package items;
 
-import lists.AthleteList;
+import java.util.TreeMap;
 
 public class Event {
     String name;
     Sport sport;
     OlympicGame olympicGame;
-    AthleteList athletes = new AthleteList();
-    AthleteList medalists = new AthleteList();
+    TreeMap<Integer, Athlete> athletes = new TreeMap<>();
+    TreeMap<Integer, Athlete> medalists = new TreeMap<>();
 
     public Event(String event) {
         this.name = event;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        if (object == this) {
-            return true;
-        }
-        if (object == null || object.getClass() != this.getClass()) {
-            return false;
-        }
-        Event event = (Event) object;
-        return this.name.equals(event.name);
-    }
-
     public void addAthlete(Athlete athlete) {
-        athletes.addWhenMissing(athlete);
+        athletes.putIfAbsent(athlete.getId(), athlete);
     }
 
     public void addMedalist(Athlete athlete) {
-        medalists.add(athlete);
+        medalists.put(athlete.getId(), athlete);
     }
 
     public void setSport(Sport sport) {
@@ -41,14 +29,15 @@ public class Event {
         this.olympicGame = olympicGame;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public String toString() {
         return "Event{" +
                 "name='" + name + '\'' +
-                ", sport=" + sport +
-                ", olympicGame=" + olympicGame +
-                ", athletes=" + athletes +
-                ", medalists=" + medalists +
+                ", athletes=" + athletes.size() +
                 '}';
     }
 }

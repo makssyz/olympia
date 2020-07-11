@@ -1,36 +1,28 @@
 package items;
 
-import lists.EventList;
+import java.util.TreeMap;
 
 public class Sport {
     String name;
-    EventList events = new EventList();
+    TreeMap<String, Event> events = new TreeMap<>();
 
     public Sport(String sport) {
         this.name = sport;
     }
 
     public void addEvent(Event event) {
-        events.addWhenMissing(event);
+        events.putIfAbsent(event.getName(), event);
     }
 
-    @Override
-    public boolean equals(Object object) {
-        if (object == this) {
-            return true;
-        }
-        if (object == null || object.getClass() != this.getClass()) {
-            return false;
-        }
-        Sport sport = (Sport) object;
-        return this.name.equals(sport.name);
+    public String getName() {
+        return name;
     }
 
     @Override
     public String toString() {
         return "Sport{" +
                 "name='" + name + '\'' +
-                ", events=" + events +
+                ", events=" + events.size() +
                 '}';
     }
 }

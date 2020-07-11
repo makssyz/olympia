@@ -13,10 +13,6 @@ public class Medal {
 
     @Override
     public String toString() {
-        return "Medal{" +
-                "event=" + event +
-                ", medalist=" + medalist +
-                ", metal='" + metal + '\'' +
-                '}';
+        return "Medal{event=" + event + ", medalist=" + medalist.getName() + ", metal='" + metal + "'}";
     }
 }
