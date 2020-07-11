@@ -1,30 +1,22 @@
 package items;
 
-import lists.AthleteList;
+import java.util.TreeMap;
 
 public class Team{
     private final String name;
     private NOC noc;
-    AthleteList athletes = new AthleteList();
+    TreeMap<Integer, Athlete> athletes = new TreeMap<>();
 
     public Team(String team) {
         this.name = team;
     }
 
     public void addAthlete(Athlete athlete) {
-        athletes.addWhenMissing(athlete);
+        athletes.putIfAbsent(athlete.getId(), athlete);
     }
 
-    @Override
-    public boolean equals(Object object) {
-        if (object == this) {
-            return true;
-        }
-        if (object == null || object.getClass() != this.getClass()) {
-            return false;
-        }
-        Team team = (Team) object;
-        return this.name.equals(team.name);
+    public String getName() {
+        return name;
     }
 
     public void setNoc(NOC noc) {
@@ -36,7 +28,7 @@ public class Team{
         return "Team{" +
                 "name='" + name + '\'' +
                 ", noc=" + noc +
-                ", athletes=" + athletes +
+                ", athletes=" + athletes.size() +
                 '}';
     }
 }

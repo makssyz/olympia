@@ -40,37 +40,19 @@ public class Athlete {
         medals.add(medal);
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     @Override
     public String toString() {
         return "Athlete{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", birthyear=" + birthyear +
-                ", gender='" + gender + '\'' +
-                ", height=" + height +
-                ", weight=" + weight +
-                ", medals=" + medals +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (object == this) {
-            return true;
-        }
-        if (object == null || object.getClass() != this.getClass()) {
-            return false;
-        }
-        Athlete athlete = (Athlete) object;
-        return this.id == athlete.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return this.id;
-    }
-
-    public int getId() {
-        return id;
     }
 }

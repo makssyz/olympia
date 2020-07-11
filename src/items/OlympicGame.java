@@ -1,8 +1,6 @@
 package items;
 
-import lists.EventList;
-import lists.SportList;
-import lists.TeamList;
+import java.util.TreeMap;
 
 import static java.lang.Integer.parseInt;
 
@@ -11,9 +9,9 @@ public class OlympicGame{
     int year;
     String season;
     String city;
-    EventList events = new EventList();
-    TeamList teams = new TeamList();
-    SportList sports = new SportList();
+    TreeMap<String, Event> events = new TreeMap<>();
+    TreeMap<String, Team> teams = new TreeMap<>();
+    TreeMap<String, Sport> sports = new TreeMap<>();
 
     public OlympicGame(String game, String year, String season, String city) {
         this.name = game;
@@ -23,34 +21,29 @@ public class OlympicGame{
     }
 
     public void addEvent(Event event) {
-        events.addWhenMissing(event);
+        events.putIfAbsent(event.getName(), event);
+    }
+
+    public void addTeam(Team team) {
+        teams.putIfAbsent(team.getName(), team);
     }
 
     public void addSport(Sport sport) {
-        sports.addWhenMissing(sport); }
+        sports.putIfAbsent(sport.getName(), sport);
+    }
 
-    @Override
-    public boolean equals(Object object) {
-        if (object == this) {
-            return true;
-        }
-        if (object == null || object.getClass() != this.getClass()) {
-            return false;
-        }
-        OlympicGame olympicGame = (OlympicGame) object;
-        return this.name.equals(olympicGame.name);
+    public String getName() {
+        return name;
     }
 
     @Override
     public String toString() {
         return "OlympicGame{" +
                 "name='" + name + '\'' +
-                ", year=" + year +
-                ", season='" + season + '\'' +
                 ", city='" + city + '\'' +
-                ", events=" + events +
-                ", teams=" + teams +
-                ", sports=" + sports +
+                ", events=" + events.size() +
+                ", teams=" + teams.size() +
+                ", sports=" + sports.size() +
                 '}';
     }
 }
