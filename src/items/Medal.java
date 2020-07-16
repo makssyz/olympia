@@ -1,6 +1,8 @@
 package items;
 
-public class Medal {
+import java.util.Comparator;
+
+public class Medal implements Comparable<Medal> {
     Event event;
     Athlete medalist;
     String metal;
@@ -13,6 +15,12 @@ public class Medal {
 
     @Override
     public String toString() {
-        return "Medal{event=" + event + ", medalist=" + medalist.getName() + ", metal='" + metal + "'}";
+        return "" + metal + " Medal ("+ event.getOlympicGame().getYear() + ") for " + event.getSport() + "\n";
+    }
+
+    @Override
+    public int compareTo(Medal medal) {
+
+        return this.toString().compareTo(medal.toString());
     }
 }

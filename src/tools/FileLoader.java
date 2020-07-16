@@ -1,3 +1,5 @@
+package tools;
+
 import items.*;
 import lists.*;
 
@@ -6,8 +8,8 @@ import java.util.Scanner;
 import java.util.TreeMap;
 
 public class FileLoader {
-    public static MasterList loadData() {
-        InputStream datafile = FileLoader.class.getResourceAsStream("olympic.db");
+    public static Database loadData() {
+        InputStream datafile = FileLoader.class.getResourceAsStream("../data/smol.db");
         Scanner reader = new Scanner(datafile);
         reader.nextLine();
 
@@ -18,7 +20,7 @@ public class FileLoader {
         TreeMap<String, Sport> sportList = new TreeMap<>();
         TreeMap<String, Team> teamList = new TreeMap<>();
         MedalList medalList = new MedalList();
-        MasterList masterList = new MasterList(athleteList, eventList, nocList, olympicGameList, sportList, teamList, medalList);
+        Database database = new Database(athleteList, eventList, nocList, olympicGameList, sportList, teamList, medalList);
         Object value;
 
         while (reader.hasNextLine()) {
@@ -98,10 +100,11 @@ public class FileLoader {
                 medalList.add(medalObject);
                 eventObject.addMedalist(athlete);
                 athlete.addMedal(medalObject);
+                athlete.getMedals().sortByMetal();
             }
         }
         reader.close();
-        return masterList;
+        return database;
     }
 
 //    private static Object putReference(TreeMap<>) {

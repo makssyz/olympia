@@ -1,23 +1,24 @@
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
-import lists.MasterList;
 
 public class Main extends Application {
 
     public static void main(String[] args) {
-        MasterList masterList = FileLoader.loadData();
+        launch(args);
+//        MasterList masterList = FileLoader.loadData();
+//        System.out.println(masterList.getAthleteList().entrySet());
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("fxml_example.fxml"));
+        TabPane root = FXMLLoader.load(getClass().getResource("view/tableGUI.fxml"));
 
-        Scene scene = new Scene(root, 300, 275);
+        Scene scene = new Scene(root);
 
-        stage.setTitle("FXML Welcome");
+        stage.setTitle("Olympia");
         stage.setScene(scene);
         stage.show();
     }

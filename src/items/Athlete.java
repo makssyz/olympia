@@ -9,31 +9,24 @@ public class Athlete {
 
     private final int id;
     private final String name;
-    private final int birthyear;
+    private final String birthyear;
     private final String gender;
-    private final double height;
-    private final double weight;
+    private final String height;
+    private final String weight;
     public MedalList medals = new MedalList();
 
     public Athlete(String id, String name, String age, String year, String gender, String height, String weight) {
         this.id = parseInt(id);
         this.name = name;
         if(age.equals("NA")) {
-            this.birthyear = -1;
+            this.birthyear = "NA";
         } else {
-            this.birthyear = parseInt(year) - parseInt(age);
+            int birthyear = parseInt(year) - parseInt(age);
+            this.birthyear = "" + birthyear;
         }
         this.gender = gender;
-        if(height.equals("NA")) {
-            this.height = -1;
-        } else {
-            this.height = parseDouble(height);
-        }
-        if(weight.equals("NA")) {
-            this.weight = -1;
-        } else {
-            this.weight = parseDouble(weight);
-        }
+        this.height = height;
+        this.weight = weight;
     }
 
     public void addMedal(Medal medal) {
@@ -46,6 +39,26 @@ public class Athlete {
 
     public String getName() {
         return name;
+    }
+
+    public String getBirthyear() {
+        return birthyear;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public String getHeight() {
+        return height;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public MedalList getMedals() {
+        return medals;
     }
 
     @Override
