@@ -32,6 +32,11 @@ public class OlympicGame{
         sports.putIfAbsent(sport.getName(), sport);
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
     public String getName() {
         return name;
     }
@@ -40,14 +45,23 @@ public class OlympicGame{
         return year;
     }
 
-    @Override
-    public String toString() {
-        return "OlympicGame{" +
-                "name='" + name + '\'' +
-                ", city='" + city + '\'' +
-                ", events=" + events.size() +
-                ", teams=" + teams.size() +
-                ", sports=" + sports.size() +
-                '}';
+    public String getSeason() {
+        return season;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public TreeMap<String, Event> getEvents() {
+        return events;
+    }
+
+    public TreeMap<String, Team> getTeams() {
+        return teams;
+    }
+
+    public TreeMap<String, Sport> getSports() {
+        return sports;
     }
 }

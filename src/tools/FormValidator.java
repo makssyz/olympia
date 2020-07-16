@@ -21,5 +21,11 @@ public class FormValidator {
         }
     }
 
+    public static boolean isNocValid(TextField textfield) throws InvalidInputError {
+        if (textfield.getText().length() == 3) return true;
+        throw new InvalidInputError("Error: The NOC abbreviation needs to have 3 letters.");
+
+    }
+
 
 }

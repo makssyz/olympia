@@ -70,9 +70,6 @@ public class Athlete {
 
     @Override
     public String toString() {
-        return "Athlete{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return id + ": " + name;
     }
 }

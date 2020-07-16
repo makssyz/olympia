@@ -28,9 +28,6 @@ public class NOC{
 
     @Override
     public String toString() {
-        return "NOC{" +
-                "name='" + name + '\'' +
-                ", teams=" + teams.size() +
-                '}';
+        return name;
     }
 }

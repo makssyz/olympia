@@ -15,20 +15,24 @@ public class Team{
         athletes.putIfAbsent(athlete.getId(), athlete);
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public NOC getNoc() {
+        return noc;
     }
 
     public void setNoc(NOC noc) {
         this.noc = noc;
     }
 
-    @Override
-    public String toString() {
-        return "Team{" +
-                "name='" + name + '\'' +
-                ", noc=" + noc +
-                ", athletes=" + athletes.size() +
-                '}';
+    public TreeMap<Integer, Athlete> getAthletes() {
+        return athletes;
     }
 }
