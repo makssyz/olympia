@@ -14,12 +14,16 @@ public class Sport {
         events.putIfAbsent(event.getName(), event);
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
     public String getName() {
         return name;
     }
 
-    @Override
-    public String toString() {
-        return name;
+    public TreeMap<String, Event> getEvents() {
+        return events;
     }
 }

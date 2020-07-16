@@ -21,12 +21,9 @@ public class Event {
         medalists.put(athlete.getId(), athlete);
     }
 
-    public void setSport(Sport sport) {
-        this.sport = sport;
-    }
-
-    public void setOlympicGame(OlympicGame olympicGame) {
-        this.olympicGame = olympicGame;
+    @Override
+    public String toString() {
+        return name;
     }
 
     public String getName() {
@@ -37,15 +34,23 @@ public class Event {
         return sport;
     }
 
+    public void setSport(Sport sport) {
+        this.sport = sport;
+    }
+
     public OlympicGame getOlympicGame() {
         return olympicGame;
     }
 
-    @Override
-    public String toString() {
-        return "Event{" +
-                "name='" + name + '\'' +
-                ", athletes=" + athletes.size() +
-                '}';
+    public void setOlympicGame(OlympicGame olympicGame) {
+        this.olympicGame = olympicGame;
+    }
+
+    public TreeMap<Integer, Athlete> getAthletes() {
+        return athletes;
+    }
+
+    public TreeMap<Integer, Athlete> getMedalists() {
+        return medalists;
     }
 }
