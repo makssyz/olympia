@@ -3,13 +3,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
+import lists.Database;
+import tools.FileHandler;
 
 public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
-//        MasterList masterList = FileLoader.loadData();
-//        System.out.println(masterList.getAthleteList().entrySet());
     }
 
     @Override
