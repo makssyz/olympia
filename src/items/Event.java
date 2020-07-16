@@ -33,6 +33,14 @@ public class Event {
         return name;
     }
 
+    public Sport getSport() {
+        return sport;
+    }
+
+    public OlympicGame getOlympicGame() {
+        return olympicGame;
+    }
+
     @Override
     public String toString() {
         return "Event{" +

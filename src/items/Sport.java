@@ -20,9 +20,6 @@ public class Sport {
 
     @Override
     public String toString() {
-        return "Sport{" +
-                "name='" + name + '\'' +
-                ", events=" + events.size() +
-                '}';
+        return name;
     }
 }
