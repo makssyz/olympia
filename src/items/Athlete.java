@@ -41,6 +41,10 @@ public class Athlete {
         return name;
     }
 
+    public MedalList getMedals() {
+        return medals;
+    }
+
     public String getBirthyear() {
         return birthyear;
     }
@@ -57,8 +61,11 @@ public class Athlete {
         return weight;
     }
 
-    public MedalList getMedals() {
-        return medals;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (obj == null || obj.getClass() != this.getClass()) return false;
+        return name.equals(((Athlete) obj).name);
     }
 
     @Override

@@ -1,10 +1,6 @@
 package tools;
 
-import lists.Database;
-
 import java.io.*;
-import java.util.TreeMap;
-import tools.FileLoader;
 
 public class Serializer {
 
