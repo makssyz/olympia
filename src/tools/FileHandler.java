@@ -1,19 +1,31 @@
 package tools;
 
+import javafx.scene.control.Alert;
 import lists.*;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.Scanner;
 
 
 public class FileHandler {
-    private static final File fileRelative = new File("../data/smol.db") ;
-    private static final File fileAbsolute = new File("src/data/smol.db") ;
+    private static File fileRelative;
+    private static File fileAbsolute;
 
-    public static Database loadData() {
+    public FileHandler(String filename) throws IOException {
+        try {
+            fileRelative = new File("../data/" + filename + ".db");
+            fileAbsolute = new File("src/data/" + filename + ".db");
+        } catch (NullPointerException e) { // Doesn't trigger when file doesn't exist
+            Alert fileDoesntExist = new Alert(Alert.AlertType.ERROR);
+            fileDoesntExist.setHeaderText("Error");
+            fileDoesntExist.setContentText("File with this name does not exist in the data directory. "
+                    + "Please try a different name or create a valid file.");
+            fileDoesntExist.show();
+        }
+
+    }
+
+    public Database loadData() {
 
         Scanner reader = openFileReader();
         reader.nextLine();
@@ -28,12 +40,12 @@ public class FileHandler {
         return database;
     }
 
-    public static Scanner openFileReader() {
+    public Scanner openFileReader() {
         InputStream datafile = FileHandler.class.getResourceAsStream(fileRelative.getPath());
         return new Scanner(datafile);
     }
 
-    public static void addToFile(String entryLine) {
+    public void addToFile(String entryLine) {
         try {
 
             FileWriter author = new FileWriter(fileAbsolute.getAbsoluteFile(), true);

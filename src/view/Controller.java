@@ -11,22 +11,26 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lists.Database;
 import lists.Entry;
+import lists.Form;
 import lists.MedalList;
 import tools.FileHandler;
 import tools.FormValidator;
+import tools.Serializer;
+import tools.TableFilter;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
 public class Controller implements Initializable {
     Database database = new Database();
 
-    /* Welcome Page */
-    @FXML private Button loadDataButton;
-    @FXML private ProgressBar loadDataBar;
+    /* Welcome Tab */
+    @FXML private TextField filenameInputField;
+    FileHandler fileHandler;
 
     /* Athlete Table View */
-    @FXML private TableView<Athlete> athleteTableView;
+    @FXML private TableView<Object> athleteTableView;
     @FXML private TableColumn<Athlete, Integer> athleteIdColumn;
     @FXML private TableColumn<Athlete, String> athleteNameColumn;
     @FXML private TableColumn<Athlete, Integer> athleteBirthyearColumn;
@@ -36,27 +40,27 @@ public class Controller implements Initializable {
     @FXML private TableColumn<Athlete, MedalList> athleteMedalsColumn;
     @FXML private TextField athleteSearchField;
     @FXML private ChoiceBox<String> athleteSearchCategory;
-    ObservableList<Athlete> athleteList = FXCollections.observableArrayList();
+    ObservableList<Object> athleteList = FXCollections.observableArrayList();
 
     /* Team Table View */
-    @FXML private TableView<Team> teamTableView;
+    @FXML private TableView<Object> teamTableView;
     @FXML private TableColumn<Team, String> teamNocColumn;
     @FXML private TableColumn<Team, String> teamNameColumn;
     @FXML private TableColumn<Team, String> teamAthletesColumn;
     @FXML private TextField teamSearchField;
     @FXML private ChoiceBox<String> teamSearchCategory;
-    ObservableList<Team> teamList = FXCollections.observableArrayList();
+    ObservableList<Object> teamList = FXCollections.observableArrayList();
 
     /* Sport Table View */
-    @FXML private TableView<Sport> sportTableView;
+    @FXML private TableView<Object> sportTableView;
     @FXML private TableColumn<Sport, String> sportNameColumn;
     @FXML private TableColumn<Sport, String> sportEventsColumn;
     @FXML private TextField sportSearchField;
     @FXML private ChoiceBox<String> sportSearchCategory;
-    ObservableList<Sport> sportList = FXCollections.observableArrayList();
+    ObservableList<Object> sportList = FXCollections.observableArrayList();
 
     /* Event Table View */
-    @FXML private TableView<Event> eventTableView;
+    @FXML private TableView<Object> eventTableView;
     @FXML private TableColumn<Event, String> eventNameColumn;
     @FXML private TableColumn<Event, String> eventSportColumn;
     @FXML private TableColumn<Event, String> eventGameColumn;
@@ -64,10 +68,10 @@ public class Controller implements Initializable {
     @FXML private TableColumn<Event, String> eventAthletesColumn;
     @FXML private TextField eventSearchField;
     @FXML private ChoiceBox<String> eventSearchCategory;
-    ObservableList<Event> eventList = FXCollections.observableArrayList();
+    ObservableList<Object> eventList = FXCollections.observableArrayList();
 
     /* Olympic Game Table View */
-    @FXML private TableView<OlympicGame> gameTableView;
+    @FXML private TableView<Object> gameTableView;
     @FXML private TableColumn<OlympicGame, Integer> gameYearColumn;
     @FXML private TableColumn<OlympicGame, String> gameSeasonColumn;
     @FXML private TableColumn<OlympicGame, String> gameCityColumn;
@@ -76,35 +80,34 @@ public class Controller implements Initializable {
     @FXML private TableColumn<OlympicGame, String> gameSportColumn;
     @FXML private TextField gameSearchField;
     @FXML private ChoiceBox<String> gameSearchCategory;
-    ObservableList<OlympicGame> gameList = FXCollections.observableArrayList();
+    ObservableList<Object> gameList = FXCollections.observableArrayList();
 
     /* Create New Entry */
-    @FXML private TextField createName;
-    @FXML private ChoiceBox<String> createGender;
-    @FXML private TextField createBirthyear;
-    @FXML private TextField createHeight;
-    @FXML private TextField createWeight;
-    @FXML private TextField createTeam;
-    @FXML private TextField createNoc;
-    @FXML private TextField createYear;
-    @FXML private ChoiceBox<String> createSeason;
-    @FXML private TextField createCity;
-    @FXML private TextField createSport;
-    @FXML private TextField createEvent;
-    @FXML private ChoiceBox<String> createMedal;
-    @FXML private CheckBox createExists;
+    @FXML private TextField nameInputField;
+    @FXML private ChoiceBox<String> genderInputField;
+    @FXML private TextField birthyearInputField;
+    @FXML private TextField heightInputField;
+    @FXML private TextField weightInputField;
+    @FXML private TextField teamInputField;
+    @FXML private TextField nocInputField;
+    @FXML private TextField yearInputField;
+    @FXML private ChoiceBox<String> seasonInputField;
+    @FXML private TextField cityInputField;
+    @FXML private TextField sportInputField;
+    @FXML private TextField eventInputField;
+    @FXML private ChoiceBox<String> medalInputField;
+    @FXML private TextField idInputField;
+    @FXML private CheckBox existsCheckbox;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         buildView();
     }
 
-    public void reloadData() {
-        loadDataBar.setProgress(0);
-        database = FileHandler.loadData();
-        loadDataBar.setProgress(50);
+    public void reloadData() throws IOException {
+        fileHandler = new FileHandler(filenameInputField.getText());
+        database = fileHandler.loadData();
         buildView();
-        loadDataBar.setProgress(100);
     }
 
     public void buildView() {
@@ -116,37 +119,18 @@ public class Controller implements Initializable {
         buildFrom();
     }
 
-    public String createString() {
-        String id;
-        if (!createExists.isSelected()) {
-            id = Integer.toString(database.getAthleteList().lastEntry().getValue().getId() + 1);
-        } else {
-//            athleteList.contains(createName.getText());
-//            database.getAthleteList().putIfAbsent(createName.getText());
-            id = "-1"; //search for the athlete in the list
-        }
-        String age;
-        if (!createBirthyear.getText().equals("NA")) {
-            age = Integer.toString(Integer.parseInt(createYear.getText()) - Integer.parseInt(createBirthyear.getText()));
-        } else {
-            age = "NA";
-        }
-        String game = createYear.getText() + " " + createSeason.getValue();
-
-        List<String> attributes = new ArrayList<>(Arrays.asList(quotes(id), quotes(createName.getText()),
-                quotes(createGender.getValue()), age, createHeight.getText(), createWeight.getText(),
-                quotes(createTeam.getText()), createNoc.getText().toUpperCase(), quotes(game),
-                createYear.getText(), quotes(createSeason.getValue()), quotes(createCity.getText()),
-                quotes(createSport.getText()), quotes(createEvent.getText())));
-        if (!(createMedal.getValue().equals("NA"))) attributes.add(quotes(createMedal.getValue()));
-        else attributes.add(createMedal.getValue());
-
-        return String.join(",", attributes) + "\n";
-    }
-
     public void create() {
+
+        Control[] input = {nameInputField, genderInputField, birthyearInputField, heightInputField,
+                weightInputField, teamInputField, nocInputField, yearInputField, seasonInputField,
+                cityInputField, sportInputField, eventInputField, medalInputField, idInputField, existsCheckbox};
+
+        Form form = new Form(input, database);
+
+        FormValidator formValidator = new FormValidator(form);
+
         try {
-            validateInput();
+            formValidator.validateInput();
         } catch (InvalidInputError error) {
             Alert invalid = new Alert(Alert.AlertType.WARNING);
             invalid.setHeaderText("Invalid Input");
@@ -155,9 +139,10 @@ public class Controller implements Initializable {
             return;
         }
 
-        String entryLine = createString();
+        Serializer serializer = new Serializer(form);
+
+        String entryLine = serializer.createString();
         Entry entry = new Entry(entryLine);
-        System.out.println(entry);
 
         Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
         confirmation.setHeaderText("Are you sure?");
@@ -167,7 +152,7 @@ public class Controller implements Initializable {
         if (result.isPresent() && result.get() == ButtonType.OK){
             System.out.println("Entry was confirmed!");
             database.addEntry(entry);
-            FileHandler.addToFile(entryLine);
+            fileHandler.addToFile(entryLine);
             clearInput();
             buildView();
         }
@@ -185,28 +170,8 @@ public class Controller implements Initializable {
         athleteSearchCategory.setItems(FXCollections.observableArrayList("Name", "Medals"));
         athleteSearchCategory.setValue(athleteSearchCategory.getItems().get(0));
 
-        athleteList.setAll(database.getAthleteList().values());
+        athleteList.setAll(database.getAthleteMap().values());
         athleteTableView.setItems(athleteList);
-    }
-
-    public void athleteSearch() {
-        FilteredList<Athlete> filteredData = new FilteredList<>(athleteList, p -> true);
-        String searchTerm = athleteSearchField.getText();
-        filteredData.setPredicate(athlete -> {
-            if (searchTerm == null || searchTerm.isEmpty()) return true;
-            String lowerCaseFilter = searchTerm.toLowerCase();
-
-            switch (athleteSearchCategory.getValue())
-            {
-                case "Name":
-                    if (athlete.getName().toLowerCase().contains(lowerCaseFilter)) return true;
-                case "Medals":
-                    if (athlete.getMedals().toString().toLowerCase().contains(lowerCaseFilter)) return true;
-                default:
-                    return false;
-            }
-        });
-        athleteTableView.setItems(filteredData);
     }
 
     private void buildTeamTable() {
@@ -217,30 +182,8 @@ public class Controller implements Initializable {
         teamSearchCategory.setItems(FXCollections.observableArrayList("NOC", "Name", "Athletes"));
         teamSearchCategory.setValue(teamSearchCategory.getItems().get(0));
 
-        teamList.setAll(database.getTeamList().values());
+        teamList.setAll(database.getTeamMap().values());
         teamTableView.setItems(teamList);
-    }
-
-    public void teamSearch() {
-        FilteredList<Team> filteredData = new FilteredList<>(teamList, p -> true);
-        String searchTerm = teamSearchField.getText();
-        filteredData.setPredicate(team -> {
-            if (searchTerm == null || searchTerm.isEmpty()) return true;
-            String lowerCaseFilter = searchTerm.toLowerCase();
-
-            switch (teamSearchCategory.getValue())
-            {
-                case "NOC":
-                    if (team.getNoc().toString().toLowerCase().contains(lowerCaseFilter)) return true;
-                case "Medals":
-                    if (team.getName().toLowerCase().contains(lowerCaseFilter)) return true;
-                case "Athletes":
-                    if (team.getName().toLowerCase().contains(lowerCaseFilter)) return true;
-                default:
-                    return false;
-            }
-        });
-        teamTableView.setItems(filteredData);
     }
 
     private void buildSportTable() {
@@ -250,64 +193,22 @@ public class Controller implements Initializable {
         sportSearchCategory.setItems(FXCollections.observableArrayList("Name", "Events"));
         sportSearchCategory.setValue(sportSearchCategory.getItems().get(0));
 
-        sportList.setAll(database.getSportList().values());
+        sportList.setAll(database.getSportMap().values());
         sportTableView.setItems(sportList);
-    }
-
-    public void sportSearch() {
-        FilteredList<Sport> filteredData = new FilteredList<>(sportList, p -> true);
-        String searchTerm = sportSearchField.getText();
-        filteredData.setPredicate(sport -> {
-            if (searchTerm == null || searchTerm.isEmpty()) return true;
-            String lowerCaseFilter = searchTerm.toLowerCase();
-
-            switch (sportSearchCategory.getValue())
-            {
-                case "Name":
-                    if (sport.getName().toLowerCase().contains(lowerCaseFilter)) return true;
-                case "Events":
-                    if (sport.getEvents().toString().toLowerCase().contains(lowerCaseFilter)) return true;
-                default:
-                    return false;
-            }
-        });
-        sportTableView.setItems(filteredData);
     }
 
     private void buildEventTable() {
         eventNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         eventSportColumn.setCellValueFactory(new PropertyValueFactory<>("sport"));
         eventGameColumn.setCellValueFactory(new PropertyValueFactory<>("olympicGame"));
-        eventMedalistsColumn.setCellValueFactory(new PropertyValueFactory<>("medalists"));
+        eventMedalistsColumn.setCellValueFactory(new PropertyValueFactory<>("winners"));
         eventAthletesColumn.setCellValueFactory(new PropertyValueFactory<>("athletes"));
 
         eventSearchCategory.setItems(FXCollections.observableArrayList("Name", "Sport", "Athletes"));
         eventSearchCategory.setValue(eventSearchCategory.getItems().get(0));
 
-        eventList.setAll(database.getEventList().values());
+        eventList.setAll(database.getEventMap().values());
         eventTableView.setItems(eventList);
-    }
-
-    public void eventSearch() {
-        FilteredList<Event> filteredData = new FilteredList<>(eventList, p -> true);
-        String searchTerm = eventSearchField.getText();
-        filteredData.setPredicate(event -> {
-            if (searchTerm == null || searchTerm.isEmpty()) return true;
-            String lowerCaseFilter = searchTerm.toLowerCase();
-
-            switch (eventSearchCategory.getValue())
-            {
-                case "Name":
-                    if (event.getName().toLowerCase().contains(lowerCaseFilter)) return true;
-                case "Sport":
-                    if (event.getSport().toString().toLowerCase().contains(lowerCaseFilter)) return true;
-                case "Athletes":
-                    if (event.getAthletes().toString().toLowerCase().contains(lowerCaseFilter)) return true;
-                default:
-                    return false;
-            }
-        });
-        eventTableView.setItems(filteredData);
     }
 
     private void buildOlympicGameTable() {
@@ -321,76 +222,54 @@ public class Controller implements Initializable {
         gameSearchCategory.setItems(FXCollections.observableArrayList("City", "Teams", "Events", "Sports"));
         gameSearchCategory.setValue(gameSearchCategory.getItems().get(0));
 
-        gameList.setAll(database.getOlympicGameList().values());
+        gameList.setAll(database.getOlympicGameMap().values());
         gameTableView.setItems(gameList);
     }
 
-    public void gameSearch() {
-        FilteredList<OlympicGame> filteredData = new FilteredList<>(gameList, p -> true);
-        String searchTerm = gameSearchField.getText();
-        filteredData.setPredicate(game -> {
-            if (searchTerm == null || searchTerm.isEmpty()) return true;
-            String lowerCaseFilter = searchTerm.toLowerCase();
-
-            switch (gameSearchCategory.getValue())
-            {
-                case "City":
-                    if (game.getCity().toLowerCase().contains(lowerCaseFilter)) return true;
-                case "Teams":
-                    if (game.getTeams().toString().toLowerCase().contains(lowerCaseFilter)) return true;
-                case "Events":
-                    if (game.getEvents().toString().toLowerCase().contains(lowerCaseFilter)) return true;
-                case "Sports":
-                    if (game.getSports().toString().toLowerCase().contains(lowerCaseFilter)) return true;
-                default:
-                    return false;
-            }
-        });
-        gameTableView.setItems(filteredData);
-    }
-
     private void buildFrom() {
-        createGender.setItems(FXCollections.observableArrayList("M", "F"));
-        createGender.setValue(createGender.getItems().get(0));
-        createSeason.setItems(FXCollections.observableArrayList("Summer", "Winter"));
-        createSeason.setValue(createSeason.getItems().get(0));
-        createMedal.setItems(FXCollections.observableArrayList("NA", "Gold", "Silver", "Bronze"));
-        createMedal.setValue(createMedal.getItems().get(0));
+        genderInputField.setItems(FXCollections.observableArrayList("M", "F"));
+        genderInputField.setValue(genderInputField.getItems().get(0));
+        seasonInputField.setItems(FXCollections.observableArrayList("Summer", "Winter"));
+        seasonInputField.setValue(seasonInputField.getItems().get(0));
+        medalInputField.setItems(FXCollections.observableArrayList("NA", "Gold", "Silver", "Bronze"));
+        medalInputField.setValue(medalInputField.getItems().get(0));
     }
 
-    private void validateInput() throws InvalidInputError {
-        FormValidator.isInputFieldFilled(createName);
-        FormValidator.isInputFieldFilled(createTeam);
-        FormValidator.isInputFieldFilled(createNoc);
-        FormValidator.isNocValid(createNoc);
-        FormValidator.isInputFieldFilled(createYear);
-        FormValidator.isInputFieldFilled(createCity);
-        FormValidator.isInputFieldFilled(createSport);
-        FormValidator.isInputFieldFilled(createEvent);
-
-        FormValidator.isInputNumber(createYear);
-        if (!createBirthyear.getText().equals("")) FormValidator.isInputNumber(createBirthyear);
-        else createBirthyear.setText("NA");
-        if (!createHeight.getText().equals("")) FormValidator.isInputNumber(createHeight);
-        else createHeight.setText("NA");
-        if (!createWeight.getText().equals("")) FormValidator.isInputNumber(createWeight);
-        else createWeight.setText("NA");
+    public void athleteSearch() {
+        TableFilter.search(athleteList, athleteSearchField, athleteSearchCategory, athleteTableView);
     }
 
-    private String quotes(String string) {
-        return "\"" + string + "\"";
+    public void teamSearch() {
+        TableFilter.search(teamList, teamSearchField, teamSearchCategory, teamTableView);
+    }
+
+    public void sportSearch() {
+        TableFilter.search(sportList, sportSearchField, sportSearchCategory, sportTableView);
+    }
+
+    public void eventSearch() {
+        TableFilter.search(eventList, eventSearchField, eventSearchCategory, eventTableView);
+    }
+
+    public void gameSearch() {
+        TableFilter.search(gameList, gameSearchField, gameSearchCategory, gameTableView);
+    }
+
+    public void enableIdField() {
+        idInputField.setDisable(!idInputField.isDisable());
     }
 
     private void clearInput() {
-        createName.clear();
-        createBirthyear.clear();
-        createHeight.clear();
-        createWeight.clear();
-        createTeam.clear();
-        createYear.clear();
-        createCity.clear();
-        createSport.clear();
-        createEvent.clear();
+        nameInputField.clear();
+        birthyearInputField.clear();
+        heightInputField.clear();
+        weightInputField.clear();
+        teamInputField.clear();
+        nocInputField.clear();
+        yearInputField.clear();
+        cityInputField.clear();
+        sportInputField.clear();
+        eventInputField.clear();
     }
 
 }

@@ -1,22 +1,25 @@
 package items;
 
-import java.util.ArrayList;
-import java.util.TreeMap;
+import lists.ObjectSet;
 
-public class NOC{
+public class NOC implements Comparable{
     String name;
-    TreeMap<String, Team> teams = new TreeMap<>();
+    ObjectSet teams = new ObjectSet();
 
     public NOC(String noc) {
         this.name = noc;
     }
 
-    public void addTeam(Team team) {
-        teams.putIfAbsent(team.getName(), team);
+    public void addTeamIfAbsent(Team team) {
+        teams.add(team);
     }
 
     public String getName() {
         return name;
+    }
+
+    public ObjectSet getTeams() {
+        return teams;
     }
 
     @Override
@@ -24,6 +27,11 @@ public class NOC{
         if (object == this) return true;
         if (object == null || object.getClass() != this.getClass()) return false;
         return this.name.equals(((NOC) object).name);
+    }
+
+    @Override
+    public int compareTo(Object object) {
+        return this.name.compareTo(((NOC) object).name);
     }
 
     @Override

@@ -2,10 +2,9 @@ package items;
 
 import lists.MedalList;
 
-import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
-public class Athlete {
+public class Athlete implements Comparable<Athlete> {
 
     private final int id;
     private final String name;
@@ -16,7 +15,7 @@ public class Athlete {
     public MedalList medals = new MedalList();
 
     public Athlete(String id, String name, String age, String year, String gender, String height, String weight) {
-        this.id = parseInt(id);
+        this.id = Integer.parseInt(id);
         this.name = name;
         if(age.equals("NA")) {
             this.birthyear = "NA";
@@ -65,11 +64,21 @@ public class Athlete {
     public boolean equals(Object obj) {
         if (obj == this) return true;
         if (obj == null || obj.getClass() != this.getClass()) return false;
-        return name.equals(((Athlete) obj).name);
+        return id == ((Athlete) obj).id;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id;
     }
 
     @Override
     public String toString() {
-        return id + ": " + name;
+        return name + " (" + birthyear + ")";
+    }
+
+    @Override
+    public int compareTo(Athlete athlete) {
+        return this.name.compareTo(athlete.name);
     }
 }

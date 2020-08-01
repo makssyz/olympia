@@ -1,23 +1,35 @@
 package items;
 
-import java.util.TreeMap;
+import lists.ObjectSet;
 
-public class Team{
+public class Team implements Comparable<Team> {
     private final String name;
     private NOC noc;
-    TreeMap<Integer, Athlete> athletes = new TreeMap<>();
+    ObjectSet athletes = new ObjectSet();
 
     public Team(String team) {
         this.name = team;
     }
 
-    public void addAthlete(Athlete athlete) {
-        athletes.putIfAbsent(athlete.getId(), athlete);
+    public void addAthleteIfAbsent(Athlete athlete) {
+        athletes.add(athlete);
     }
 
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == this) return true;
+        if (object == null || object.getClass() != this.getClass()) return false;
+        return this.name.equals(((Team) object).name);
+    }
+
+    @Override
+    public int compareTo(Team team) {
+        return this.name.compareTo(team.name);
     }
 
     public String getName() {
@@ -32,7 +44,7 @@ public class Team{
         this.noc = noc;
     }
 
-    public TreeMap<Integer, Athlete> getAthletes() {
+    public ObjectSet getAthletes() {
         return athletes;
     }
 }

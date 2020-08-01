@@ -1,24 +1,36 @@
 package items;
 
-import java.util.TreeMap;
+import lists.ObjectSet;
 
-public class Event {
+public class Event implements Comparable<Event> {
     String name;
     Sport sport;
     OlympicGame olympicGame;
-    TreeMap<Integer, Athlete> athletes = new TreeMap<>();
-    TreeMap<Integer, Athlete> medalists = new TreeMap<>();
+    ObjectSet athletes = new ObjectSet();
+    ObjectSet winners = new ObjectSet();
 
     public Event(String event) {
         this.name = event;
     }
 
-    public void addAthlete(Athlete athlete) {
-        athletes.putIfAbsent(athlete.getId(), athlete);
+    public void addAthleteIfAbsent(Athlete athlete) {
+        athletes.add(athlete);
     }
 
-    public void addMedalist(Athlete athlete) {
-        medalists.put(athlete.getId(), athlete);
+    public void addWinner(Athlete athlete) {
+        winners.add(athlete);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == this) return true;
+        if (object == null || object.getClass() != this.getClass()) return false;
+        return this.name.equals(((Event) object).name);
+    }
+
+    @Override
+    public int compareTo(Event event) {
+        return this.name.compareTo(event.name);
     }
 
     @Override
@@ -46,11 +58,11 @@ public class Event {
         this.olympicGame = olympicGame;
     }
 
-    public TreeMap<Integer, Athlete> getAthletes() {
+    public ObjectSet getAthletes() {
         return athletes;
     }
 
-    public TreeMap<Integer, Athlete> getMedalists() {
-        return medalists;
+    public ObjectSet getWinners() {
+        return winners;
     }
 }

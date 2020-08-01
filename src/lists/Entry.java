@@ -39,34 +39,20 @@ public class Entry {
 
         teamObject = new Team(team);
         teamObject.setNoc(nocObject);
-        nocObject.addTeam(teamObject);
-        gameObject.addTeam(teamObject);
 
         sportObject = new Sport(sport);
 
-        gameObject.addSport(sportObject);
-
         eventObject = new Event(event);
 
-        gameObject.addEvent(eventObject);
         eventObject.setOlympicGame(gameObject);
-        sportObject.addEvent(eventObject);
         eventObject.setSport(sportObject);
 
         athleteObject = new Athlete(id, name, age, year, gender, height, weight);
 
-        eventObject.addAthlete(athleteObject);
-        teamObject.addAthlete(athleteObject);
-
-        if (!medal.equals("NA")) {
-            medalObject = new Medal(eventObject, medal, athleteObject);
-            eventObject.addMedalist(athleteObject);
-            athleteObject.addMedal(medalObject);
-            athleteObject.getMedals().sortByMetal();
-        }
+        medalObject = new Medal(eventObject, medal, athleteObject);
     }
 
-    public static String[] lineToArray(String line) {
+    private String[] lineToArray(String line) {
         String[] lineArray = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
 
         for(int i = 0; i < lineArray.length; i++) {
@@ -77,10 +63,48 @@ public class Entry {
 
     @Override
     public String toString() {
-        return "ID:\t\t " + id + "\nName:\t\t " + name + "\nGender:\t " + gender + "\nAge:\t\t " + age
+        return "ID:\t\t\t " + id + "\nName:\t\t " + name + "\nGender:\t " + gender + "\nAge:\t\t " + age
                 + "\nHeight:\t\t " + height + "\nWeight:\t " + weight + "\nTeam:\t\t " + team + "\nNOC:\t\t " + noc
                 + "\nGame:\t\t " + game + "\nYear:\t\t " + year + "\nSeason:\t " + season + "\nCity:\t\t " + city
                 + "\nSport:\t\t " + sport + "\nEvent:\t\t " + event + "\nMedal:\t\t " + medal;
+    }
+
+    public void addToDatabase(Database database) {
+        Object reference;
+        boolean hasMedal = !medal.equals("NA");
+
+        reference = database.getAthleteMap().putIfAbsent(Integer.parseInt(id), athleteObject);
+        if (reference == null) reference = athleteObject;
+        if (hasMedal) {
+            ((Athlete) reference).addMedal(medalObject);
+            ((Athlete) reference).getMedals().sortByMetal();
+        }
+
+        reference = database.getTeamMap().putIfAbsent(team, teamObject);
+        if (reference == null) reference = teamObject;
+        ((Team) reference).addAthleteIfAbsent(athleteObject);
+
+        reference = database.getNocMap().putIfAbsent(noc, nocObject);
+        if (reference == null) reference = nocObject;
+        ((NOC) reference).addTeamIfAbsent(teamObject);
+
+        reference = database.getOlympicGameMap().putIfAbsent(game, gameObject);
+        if (reference == null) reference = gameObject;
+        ((OlympicGame) reference).addTeamIfAbsent(teamObject);
+        ((OlympicGame) reference).addSportIfAbsent(sportObject);
+        ((OlympicGame) reference).addEventIfAbsent(eventObject);
+
+        reference = database.getEventMap().putIfAbsent(event, eventObject);
+        if (reference == null) reference = eventObject;
+        ((Event) reference).addAthleteIfAbsent(athleteObject);
+        if (hasMedal) {
+            ((Event) reference).addWinner(athleteObject);
+        }
+
+        reference = database.getSportMap().putIfAbsent(sport, sportObject);
+        if (reference == null) reference = sportObject;
+        ((Sport) reference).addEvent(eventObject);
+
     }
 
     public OlympicGame getGameObject() {

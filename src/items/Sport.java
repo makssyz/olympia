@@ -1,17 +1,29 @@
 package items;
 
-import java.util.TreeMap;
+import lists.ObjectSet;
 
-public class Sport {
+public class Sport implements Comparable<Sport> {
     String name;
-    TreeMap<String, Event> events = new TreeMap<>();
+    ObjectSet events = new ObjectSet();
 
     public Sport(String sport) {
         this.name = sport;
     }
 
     public void addEvent(Event event) {
-        events.putIfAbsent(event.getName(), event);
+        events.add(event);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == this) return true;
+        if (object == null || object.getClass() != this.getClass()) return false;
+        return this.name.equals(((Sport) object).name);
+    }
+
+    @Override
+    public int compareTo(Sport sport) {
+        return this.name.compareTo(sport.name);
     }
 
     @Override
@@ -23,7 +35,7 @@ public class Sport {
         return name;
     }
 
-    public TreeMap<String, Event> getEvents() {
+    public ObjectSet getEvents() {
         return events;
     }
 }

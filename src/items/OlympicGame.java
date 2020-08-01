@@ -1,17 +1,17 @@
 package items;
 
-import java.util.TreeMap;
+import lists.ObjectSet;
 
 import static java.lang.Integer.parseInt;
 
-public class OlympicGame{
+public class OlympicGame {
     String name;
     int year;
     String season;
     String city;
-    TreeMap<String, Event> events = new TreeMap<>();
-    TreeMap<String, Team> teams = new TreeMap<>();
-    TreeMap<String, Sport> sports = new TreeMap<>();
+    ObjectSet events = new ObjectSet();
+    ObjectSet teams = new ObjectSet();
+    ObjectSet sports = new ObjectSet();
 
     public OlympicGame(String game, String year, String season, String city) {
         this.name = game;
@@ -20,16 +20,23 @@ public class OlympicGame{
         this.city = city;
     }
 
-    public void addEvent(Event event) {
-        events.putIfAbsent(event.getName(), event);
+    public void addEventIfAbsent(Event event) {
+        events.add(event);
     }
 
-    public void addTeam(Team team) {
-        teams.putIfAbsent(team.getName(), team);
+    public void addTeamIfAbsent(Team team) {
+        teams.add(team);
     }
 
-    public void addSport(Sport sport) {
-        sports.putIfAbsent(sport.getName(), sport);
+    public void addSportIfAbsent(Sport sport) {
+        sports.add(sport);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == this) return true;
+        if (object == null || object.getClass() != this.getClass()) return false;
+        return this.name.equals(((OlympicGame) object).name);
     }
 
     @Override
@@ -53,15 +60,15 @@ public class OlympicGame{
         return city;
     }
 
-    public TreeMap<String, Event> getEvents() {
+    public ObjectSet getEvents() {
         return events;
     }
 
-    public TreeMap<String, Team> getTeams() {
+    public ObjectSet getTeams() {
         return teams;
     }
 
-    public TreeMap<String, Sport> getSports() {
+    public ObjectSet getSports() {
         return sports;
     }
 }
