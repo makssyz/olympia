@@ -1,11 +1,9 @@
 package items;
 
-import java.util.Comparator;
-
 public class Medal implements Comparable<Medal> {
-    Event event;
-    Athlete medalist;
-    String metal;
+    final Event event;
+    final Athlete medalist;
+    final String metal;
 
     public Medal(Event event, String metal, Athlete medalist) {
         this.event = event;

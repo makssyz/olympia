@@ -5,13 +5,13 @@ import lists.ObjectSet;
 import static java.lang.Integer.parseInt;
 
 public class OlympicGame {
-    String name;
-    int year;
-    String season;
-    String city;
-    ObjectSet events = new ObjectSet();
-    ObjectSet teams = new ObjectSet();
-    ObjectSet sports = new ObjectSet();
+    final String name;
+    final int year;
+    final String season;
+    final String city;
+    final ObjectSet events = new ObjectSet();
+    final ObjectSet teams = new ObjectSet();
+    final ObjectSet sports = new ObjectSet();
 
     public OlympicGame(String game, String year, String season, String city) {
         this.name = game;

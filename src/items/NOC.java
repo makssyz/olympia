@@ -2,9 +2,9 @@ package items;
 
 import lists.ObjectSet;
 
-public class NOC implements Comparable{
-    String name;
-    ObjectSet teams = new ObjectSet();
+public class NOC implements Comparable<NOC>{
+    final String name;
+    final ObjectSet teams = new ObjectSet();
 
     public NOC(String noc) {
         this.name = noc;
@@ -30,8 +30,8 @@ public class NOC implements Comparable{
     }
 
     @Override
-    public int compareTo(Object object) {
-        return this.name.compareTo(((NOC) object).name);
+    public int compareTo(NOC noc) {
+        return this.name.compareTo(noc.name);
     }
 
     @Override

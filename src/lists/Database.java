@@ -5,13 +5,13 @@ import items.*;
 import java.util.TreeMap;
 
 public class Database {
-    TreeMap<Integer, Athlete> athleteMap;
-    TreeMap<String, Event> eventMap;
-    TreeMap<String, NOC> nocMap;
-    TreeMap<String, OlympicGame> olympicGameMap;
-    TreeMap<String, Sport> sportMap;
-    TreeMap<String, Team> teamMap;
-    MedalList medalList;
+    final TreeMap<Integer, Athlete> athleteMap;
+    final TreeMap<String, Event> eventMap;
+    final TreeMap<String, NOC> nocMap;
+    final TreeMap<String, OlympicGame> olympicGameMap;
+    final TreeMap<String, Sport> sportMap;
+    final TreeMap<String, Team> teamMap;
+    final MedalList medalList;
 
     public Database() {
         athleteMap = new TreeMap<>();

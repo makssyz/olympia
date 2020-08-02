@@ -11,22 +11,12 @@ public class FileHandler {
     private static File fileRelative;
     private static File fileAbsolute;
 
-    public FileHandler(String filename) throws IOException {
-        try {
-            fileRelative = new File("../data/" + filename + ".db");
-            fileAbsolute = new File("src/data/" + filename + ".db");
-        } catch (NullPointerException e) { // Doesn't trigger when file doesn't exist
-            Alert fileDoesntExist = new Alert(Alert.AlertType.ERROR);
-            fileDoesntExist.setHeaderText("Error");
-            fileDoesntExist.setContentText("File with this name does not exist in the data directory. "
-                    + "Please try a different name or create a valid file.");
-            fileDoesntExist.show();
-        }
-
+    public FileHandler(String filename) {
+        fileRelative = new File("../data/" + filename + ".db");
+        fileAbsolute = new File("src/data/" + filename + ".db");
     }
 
     public Database loadData() {
-
         Scanner reader = openFileReader();
         reader.nextLine();
 
@@ -41,8 +31,17 @@ public class FileHandler {
     }
 
     public Scanner openFileReader() {
-        InputStream datafile = FileHandler.class.getResourceAsStream(fileRelative.getPath());
-        return new Scanner(datafile);
+        try {
+            InputStream datafile = FileHandler.class.getResourceAsStream(fileRelative.getPath());
+            return new Scanner(datafile);
+        } catch (NullPointerException e) {
+            Alert fileDoesntExist = new Alert(Alert.AlertType.ERROR);
+            fileDoesntExist.setHeaderText("Error");
+            fileDoesntExist.setContentText("File with this name does not exist in the data directory. "
+                    + "Please try a different name or create a valid file.");
+            fileDoesntExist.show();
+        }
+        return null;
     }
 
     public void addToFile(String entryLine) {
@@ -55,8 +54,8 @@ public class FileHandler {
         catch (IOException e) {
             System.out.println("Error: " + e);
         }
-
     }
+
 }
 
 

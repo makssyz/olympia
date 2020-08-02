@@ -1,21 +1,13 @@
 package tools;
 
+import items.Athlete;
 import javafx.scene.control.TextField;
 import exceptions.InvalidInputError;
-import lists.Database;
 import lists.Form;
 
 public class FormValidator {
-    Form form;
-    Database database;
 
-    public FormValidator(Form form) {
-        this.form = form;
-        this.database = form.getDatabase();
-    }
-
-    public void validateInput() throws InvalidInputError {
-
+    public static void validateInput(Form form) throws InvalidInputError {
         isInputFieldFilled(form.getNameInputField());
         isInputFieldFilled(form.getTeamInputField());
         isInputFieldFilled(form.getNocInputField());
@@ -27,7 +19,7 @@ public class FormValidator {
 
         if (form.isExists()) {
             isInputFieldFilled(form.getIdInputField());
-            isIdValid();
+            isIdValid(form);
         }
 
         isInputNumber(form.getYearInputField());
@@ -51,12 +43,12 @@ public class FormValidator {
         }
     }
 
-    private void isInputFieldFilled(TextField textField) throws InvalidInputError {
+    private static void isInputFieldFilled(TextField textField) throws InvalidInputError {
         if (!textField.getText().equals("")) return;
         throw new InvalidInputError("Error: The " + textField.getId() + " is required.");
     }
 
-    private void isInputNumber(TextField textField) throws InvalidInputError {
+    private static void isInputNumber(TextField textField) throws InvalidInputError {
         try {
             if (textField.getText().equals("NA")) return;
             Double.parseDouble(textField.getText());
@@ -65,18 +57,21 @@ public class FormValidator {
         }
     }
 
-    private void isNocValid(TextField nocField) throws InvalidInputError {
+    private static void isNocValid(TextField nocField) throws InvalidInputError {
         if (nocField.getText().length() == 3) return;
         throw new InvalidInputError("Error: The NOC abbreviation needs to have 3 letters.");
     }
 
-    private void isIdValid() throws InvalidInputError {
+    private static void isIdValid(Form form) throws InvalidInputError {
         int id = Integer.parseInt(form.getId());
         String typedName = form.getName();
-        String athleteName = database.getAthleteMap().get(id).getName();
-        if (typedName.equals(athleteName)) return;
-        throw new InvalidInputError("Error: The Athlete with the id " + id + " is called '" + athleteName
-                + "', not '" + typedName + "'.");
+        String typedBirthyear = form.getBirthyear();
+        Athlete athlete = form.getDatabase().getAthleteMap().get(id);
+        String athleteName = athlete.getName();
+        String athleteBirthyear = athlete.getBirthyear();
+        if (typedName.equals(athleteName) && typedBirthyear.equals(athleteBirthyear)) return;
+        throw new InvalidInputError("Error: The athlete with the id " + id + " is '" + athlete
+                + "' and doesn't match provided athlete '" + typedName + " (" + typedBirthyear + ")'.");
     }
 
 }

@@ -1,23 +1,15 @@
 package tools;
 
-import lists.Database;
 import lists.Form;
 
 public class Serializer {
-    Form form;
-    Database database;
 
-    public Serializer(Form form) {
-        this.form = form;
-        this.database = form.getDatabase();
-    }
-
-    public String createString() {
+    public static String createString(Form form) {
 
         String id;
         if (!form.isExists()) {
             try {
-                id = Integer.toString(database.getAthleteMap().lastEntry().getValue().getId() + 1);
+                id = Integer.toString(form.getDatabase().getAthleteMap().lastEntry().getValue().getId() + 1);
             } catch (NullPointerException e) {
                 id = "1";
             }
@@ -57,7 +49,7 @@ public class Serializer {
         return attributesAsString;
     }
 
-    private String quotes(String string) {
+    private static String quotes(String string) {
         return "\"" + string + "\"";
     }
 }

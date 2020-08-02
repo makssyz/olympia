@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class MedalList {
-    ArrayList<Medal> medals = new ArrayList<>();
+    final ArrayList<Medal> medals = new ArrayList<>();
 
     public void add(Medal medal) {
         medals.add(medal);

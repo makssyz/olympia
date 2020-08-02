@@ -12,7 +12,7 @@ public class Athlete implements Comparable<Athlete> {
     private final String gender;
     private final String height;
     private final String weight;
-    public MedalList medals = new MedalList();
+    public final MedalList medals = new MedalList();
 
     public Athlete(String id, String name, String age, String year, String gender, String height, String weight) {
         this.id = Integer.parseInt(id);

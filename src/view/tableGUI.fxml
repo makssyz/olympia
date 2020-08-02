@@ -17,317 +17,330 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="971.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Controller">
-  <tabs>
-      <Tab text="Welcome">
-         <content>
-            <BorderPane prefHeight="538.0" prefWidth="796.0">
-               <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </padding>
-               <top>
-                  <Label text="Olympia" BorderPane.alignment="CENTER">
-                     <font>
-                        <Font size="82.0" />
-                     </font>
-                  </Label>
-               </top>
-               <center>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="An application in Java that deals with the entry, &#10;search and exploration of the history of Olympic &#10;athletes. Attention is paid to an object-oriented &#10;data model. Apart from the JDK and OpenJFX, &#10;no other libraries were used.&#10;&#10;To load data, type name of file in the data &#10;directory and click the button.&#10;" BorderPane.alignment="CENTER">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Text>
-               </center>
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0"
+         prefWidth="971.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1"
+         xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Controller">
+   <Tab text="Welcome">
+      <BorderPane prefHeight="538.0" prefWidth="796.0">
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+         </padding>
+         <top>
+            <Label text="Olympia" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="82.0"/>
+               </font>
+            </Label>
+         </top>
+         <center>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                  text="An application in Java that deals with the entry, &#10;search and exploration of the history of Olympic &#10;athletes. Attention is paid to an object-oriented &#10;data model. Apart from the JDK and OpenJFX, &#10;no other libraries were used.&#10;&#10;To load data, type name of file in the data &#10;directory and click the button.&#10;"
+                  BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="30.0"/>
+               </font>
+            </Text>
+         </center>
+         <bottom>
+            <BorderPane prefHeight="116.0" prefWidth="931.0" BorderPane.alignment="CENTER">
                <bottom>
-                  <BorderPane prefHeight="116.0" prefWidth="931.0" BorderPane.alignment="CENTER">
-                     <bottom>
-                        <Button fx:id="loadDataButton" mnemonicParsing="false" onAction="#reloadData" prefHeight="63.0" prefWidth="300.0" text="Reload in data from file&#10;(might take a few moments)" textAlignment="CENTER" BorderPane.alignment="CENTER">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Button>
-                     </bottom>
-                     <center>
-                        <GridPane BorderPane.alignment="CENTER">
-                          <columnConstraints>
-                            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="460.6595153808594" minWidth="10.0" prefWidth="410.7238464355469" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="525.0804138183594" minWidth="10.0" prefWidth="170.01068115234375" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="525.0804138183594" minWidth="10.0" prefWidth="357.48931884765625" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <TextField fx:id="filenameInputField" alignment="CENTER_RIGHT" maxWidth="200.0" prefHeight="41.0" prefWidth="137.0" promptText="olympic" text="olympic" GridPane.columnIndex="1">
-                                 <font>
-                                    <Font size="21.0" />
-                                 </font>
-                              </TextField>
-                              <Label text="Filename: ">
-                                 <font>
-                                    <Font size="21.0" />
-                                 </font>
-                              </Label>
-                              <Label text=".db" GridPane.columnIndex="2">
-                                 <font>
-                                    <Font size="21.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </GridPane>
-                     </center>
-                  </BorderPane>
+                  <Button mnemonicParsing="false" onAction="#reloadData" prefHeight="63.0"
+                          prefWidth="300.0" text="Reload in data from file&#10;(might take a few moments)"
+                          textAlignment="CENTER" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font size="20.0"/>
+                     </font>
+                  </Button>
                </bottom>
-            </BorderPane>
-         </content>
-      </Tab>
-    <Tab text="Athletes">
-         <content>
-            <BorderPane prefHeight="538.0" prefWidth="796.0">
-               <top>
-                  <BorderPane prefHeight="3.0" prefWidth="754.0" BorderPane.alignment="CENTER">
-                     <left>
-                        <ChoiceBox fx:id="athleteSearchCategory" prefHeight="27.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
-                     </left>
-                     <center>
-                        <TextField fx:id="athleteSearchField" onKeyReleased="#athleteSearch" promptText="Search" BorderPane.alignment="CENTER" />
-                     </center>
-                     <padding>
-                        <Insets bottom="20.0" />
-                     </padding>
-                  </BorderPane>
-               </top>
                <center>
-                  <TableView fx:id="athleteTableView" prefHeight="491.0" prefWidth="754.0" BorderPane.alignment="CENTER">
-                    <columns>
-                      <TableColumn fx:id="athleteIdColumn" maxWidth="2500.0" prefWidth="42.0" text="ID" />
-                      <TableColumn fx:id="athleteNameColumn" maxWidth="6000.0" prefWidth="182.0" text="Name" />
-                        <TableColumn fx:id="athleteBirthyearColumn" maxWidth="2700.0" minWidth="0.0" prefWidth="137.0" text="Birthyear" />
-                        <TableColumn fx:id="athleteGenderColumn" maxWidth="1000.0" prefWidth="59.0" text="Sex" />
-                        <TableColumn fx:id="athleteHeightColumn" maxWidth="2700.0" prefWidth="75.0" text="Height" />
-                        <TableColumn fx:id="athleteWeightColumn" maxWidth="2700.0" prefWidth="75.0" text="Weight" />
-                        <TableColumn fx:id="athleteMedalsColumn" maxWidth="7000.0" prefWidth="75.0" text="Medals" />
-                    </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                  </TableView>
+                  <GridPane BorderPane.alignment="CENTER">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="460.6595153808594"
+                                           minWidth="10.0" prefWidth="410.7238464355469"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="525.0804138183594" minWidth="10.0"
+                                           prefWidth="170.01068115234375"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="525.0804138183594" minWidth="10.0"
+                                           prefWidth="357.48931884765625"/>
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                     </rowConstraints>
+                     <TextField fx:id="filenameInputField" alignment="CENTER_RIGHT" maxWidth="200.0"
+                                prefHeight="41.0" prefWidth="137.0" promptText="olympic" text="olympic"
+                                GridPane.columnIndex="1">
+                        <font>
+                           <Font size="21.0"/>
+                        </font>
+                     </TextField>
+                     <Label text="Filename: ">
+                        <font>
+                           <Font size="21.0"/>
+                        </font>
+                     </Label>
+                     <Label text=".db" GridPane.columnIndex="2">
+                        <font>
+                           <Font size="21.0"/>
+                        </font>
+                     </Label>
+                  </GridPane>
+               </center>
+            </BorderPane>
+         </bottom>
+      </BorderPane>
+   </Tab>
+   <Tab text="Athletes">
+      <BorderPane prefHeight="538.0" prefWidth="796.0">
+         <top>
+            <BorderPane prefHeight="3.0" prefWidth="754.0" BorderPane.alignment="CENTER">
+               <left>
+                  <ChoiceBox fx:id="athleteSearchCategory" prefHeight="27.0" prefWidth="100.0"
+                             BorderPane.alignment="CENTER"/>
+               </left>
+               <center>
+                  <TextField fx:id="athleteSearchField" onKeyReleased="#athleteSearch" promptText="Search"
+                             BorderPane.alignment="CENTER"/>
                </center>
                <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                  <Insets bottom="20.0"/>
                </padding>
             </BorderPane>
-         </content>
-    </Tab>
-      <Tab text="Teams">
-         <content>
-            <BorderPane prefHeight="538.0" prefWidth="796.0">
-               <top>
-                  <BorderPane prefHeight="3.0" prefWidth="754.0" BorderPane.alignment="CENTER">
-                     <left>
-                        <ChoiceBox fx:id="teamSearchCategory" prefHeight="27.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
-                     </left>
-                     <center>
-                        <TextField fx:id="teamSearchField" onKeyReleased="#teamSearch" promptText="Search" BorderPane.alignment="CENTER" />
-                     </center>
-                     <padding>
-                        <Insets bottom="20.0" />
-                     </padding>
-                  </BorderPane>
-               </top>
+         </top>
+         <center>
+            <TableView fx:id="athleteTableView" prefHeight="491.0" prefWidth="754.0" BorderPane.alignment="CENTER">
+               <columns>
+                  <TableColumn fx:id="athleteIdColumn" maxWidth="2500.0" prefWidth="42.0" text="ID"/>
+                  <TableColumn fx:id="athleteNameColumn" maxWidth="6000.0" prefWidth="182.0" text="Name"/>
+                  <TableColumn fx:id="athleteBirthyearColumn" maxWidth="2700.0" minWidth="0.0" prefWidth="137.0"
+                               text="Birthyear"/>
+                  <TableColumn fx:id="athleteGenderColumn" maxWidth="1000.0" prefWidth="59.0" text="Sex"/>
+                  <TableColumn fx:id="athleteHeightColumn" maxWidth="2700.0" prefWidth="75.0" text="Height"/>
+                  <TableColumn fx:id="athleteWeightColumn" maxWidth="2700.0" prefWidth="75.0" text="Weight"/>
+                  <TableColumn fx:id="athleteMedalsColumn" maxWidth="7000.0" prefWidth="75.0" text="Medals"/>
+               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+               </columnResizePolicy>
+            </TableView>
+         </center>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+         </padding>
+      </BorderPane>
+   </Tab>
+   <Tab text="Teams">
+      <BorderPane prefHeight="538.0" prefWidth="796.0">
+         <top>
+            <BorderPane prefHeight="3.0" prefWidth="754.0" BorderPane.alignment="CENTER">
+               <left>
+                  <ChoiceBox fx:id="teamSearchCategory" prefHeight="27.0" prefWidth="100.0"
+                             BorderPane.alignment="CENTER"/>
+               </left>
                <center>
-                  <TableView fx:id="teamTableView" prefHeight="491.0" prefWidth="754.0" BorderPane.alignment="CENTER">
-                     <columns>
-                        <TableColumn fx:id="teamNocColumn" maxWidth="200.0" prefWidth="42.0" text="NOC" />
-                        <TableColumn fx:id="teamNameColumn" maxWidth="2000.0" prefWidth="285.0" text="Name" />
-                        <TableColumn fx:id="teamAthletesColumn" maxWidth="3000.0" minWidth="0.0" prefWidth="589.0" text="Athletes" />
-                     </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                  </TableView>
+                  <TextField fx:id="teamSearchField" onKeyReleased="#teamSearch" promptText="Search"
+                             BorderPane.alignment="CENTER"/>
                </center>
                <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                  <Insets bottom="20.0"/>
                </padding>
             </BorderPane>
-         </content>
-      </Tab>
-      <Tab text="Sports">
-         <content>
-            <BorderPane prefHeight="538.0" prefWidth="796.0">
-               <top>
-                  <BorderPane prefHeight="3.0" prefWidth="754.0" BorderPane.alignment="CENTER">
-                     <left>
-                        <ChoiceBox fx:id="sportSearchCategory" prefHeight="27.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
-                     </left>
-                     <center>
-                        <TextField fx:id="sportSearchField" onKeyReleased="#sportSearch" promptText="Search" BorderPane.alignment="CENTER" />
-                     </center>
-                     <padding>
-                        <Insets bottom="20.0" />
-                     </padding>
-                  </BorderPane>
-               </top>
+         </top>
+         <center>
+            <TableView fx:id="teamTableView" prefHeight="491.0" prefWidth="754.0" BorderPane.alignment="CENTER">
+               <columns>
+                  <TableColumn fx:id="teamNocColumn" maxWidth="200.0" prefWidth="42.0" text="NOC"/>
+                  <TableColumn fx:id="teamNameColumn" maxWidth="2000.0" prefWidth="285.0" text="Name"/>
+                  <TableColumn fx:id="teamAthletesColumn" maxWidth="3000.0" minWidth="0.0" prefWidth="589.0"
+                               text="Athletes"/>
+               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+               </columnResizePolicy>
+            </TableView>
+         </center>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+         </padding>
+      </BorderPane>
+   </Tab>
+   <Tab text="Sports">
+      <BorderPane prefHeight="538.0" prefWidth="796.0">
+         <top>
+            <BorderPane prefHeight="3.0" prefWidth="754.0" BorderPane.alignment="CENTER">
+               <left>
+                  <ChoiceBox fx:id="sportSearchCategory" prefHeight="27.0" prefWidth="100.0"
+                             BorderPane.alignment="CENTER"/>
+               </left>
                <center>
-                  <TableView fx:id="sportTableView" prefHeight="491.0" prefWidth="754.0" BorderPane.alignment="CENTER">
-                     <columns>
-                        <TableColumn fx:id="sportNameColumn" maxWidth="700.0" prefWidth="244.0" text="Name" />
-                        <TableColumn fx:id="sportEventsColumn" maxWidth="1000.0" prefWidth="554.0" text="Events" />
-                     </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                  </TableView>
+                  <TextField fx:id="sportSearchField" onKeyReleased="#sportSearch" promptText="Search"
+                             BorderPane.alignment="CENTER"/>
                </center>
                <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                  <Insets bottom="20.0"/>
                </padding>
             </BorderPane>
-         </content>
-      </Tab>
-      <Tab text="Events">
-         <content>
-            <BorderPane prefHeight="538.0" prefWidth="796.0">
-               <top>
-                  <BorderPane prefHeight="3.0" prefWidth="754.0" BorderPane.alignment="CENTER">
-                     <left>
-                        <ChoiceBox fx:id="eventSearchCategory" prefHeight="27.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
-                     </left>
-                     <center>
-                        <TextField fx:id="eventSearchField" onKeyReleased="#eventSearch" promptText="Search" BorderPane.alignment="CENTER" />
-                     </center>
-                     <padding>
-                        <Insets bottom="20.0" />
-                     </padding>
-                  </BorderPane>
-               </top>
+         </top>
+         <center>
+            <TableView fx:id="sportTableView" prefHeight="491.0" prefWidth="754.0" BorderPane.alignment="CENTER">
+               <columns>
+                  <TableColumn fx:id="sportNameColumn" maxWidth="700.0" prefWidth="244.0" text="Name"/>
+                  <TableColumn fx:id="sportEventsColumn" maxWidth="1000.0" prefWidth="554.0" text="Events"/>
+               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+               </columnResizePolicy>
+            </TableView>
+         </center>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+         </padding>
+      </BorderPane>
+   </Tab>
+   <Tab text="Events">
+      <BorderPane prefHeight="538.0" prefWidth="796.0">
+         <top>
+            <BorderPane prefHeight="3.0" prefWidth="754.0" BorderPane.alignment="CENTER">
+               <left>
+                  <ChoiceBox fx:id="eventSearchCategory" prefHeight="27.0" prefWidth="100.0"
+                             BorderPane.alignment="CENTER"/>
+               </left>
                <center>
-                  <TableView fx:id="eventTableView" prefHeight="491.0" prefWidth="754.0" BorderPane.alignment="CENTER">
-                     <columns>
-                        <TableColumn fx:id="eventNameColumn" maxWidth="3000.0" prefWidth="42.0" text="Name" />
-                        <TableColumn fx:id="eventSportColumn" maxWidth="2000.0" prefWidth="142.0" text="Sport" />
-                        <TableColumn fx:id="eventGameColumn" maxWidth="1500.0" minWidth="0.0" prefWidth="103.0" text="Olympic Game" />
-                        <TableColumn fx:id="eventMedalistsColumn" maxWidth="3000.0" prefWidth="59.0" text="Medalists" />
-                        <TableColumn fx:id="eventAthletesColumn" maxWidth="3000.0" prefWidth="75.0" text="Athletes" />
-                     </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                  </TableView>
+                  <TextField fx:id="eventSearchField" onKeyReleased="#eventSearch" promptText="Search"
+                             BorderPane.alignment="CENTER"/>
                </center>
                <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                  <Insets bottom="20.0"/>
                </padding>
             </BorderPane>
-         </content>
-      </Tab>
-      <Tab text="Olympic Games">
-         <content>
-            <BorderPane prefHeight="538.0" prefWidth="796.0">
-               <top>
-                  <BorderPane prefHeight="3.0" prefWidth="754.0" BorderPane.alignment="CENTER">
-                     <left>
-                        <ChoiceBox fx:id="gameSearchCategory" prefHeight="27.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
-                     </left>
-                     <center>
-                        <TextField fx:id="gameSearchField" onKeyReleased="#gameSearch" promptText="Search" BorderPane.alignment="CENTER" />
-                     </center>
-                     <padding>
-                        <Insets bottom="20.0" />
-                     </padding>
-                  </BorderPane>
-               </top>
+         </top>
+         <center>
+            <TableView fx:id="eventTableView" prefHeight="491.0" prefWidth="754.0" BorderPane.alignment="CENTER">
+               <columns>
+                  <TableColumn fx:id="eventNameColumn" maxWidth="3000.0" prefWidth="42.0" text="Name"/>
+                  <TableColumn fx:id="eventSportColumn" maxWidth="2000.0" prefWidth="142.0" text="Sport"/>
+                  <TableColumn fx:id="eventGameColumn" maxWidth="1500.0" minWidth="0.0" prefWidth="103.0"
+                               text="Olympic Game"/>
+                  <TableColumn fx:id="eventMedalistsColumn" maxWidth="3000.0" prefWidth="59.0" text="Medalists"/>
+                  <TableColumn fx:id="eventAthletesColumn" maxWidth="3000.0" prefWidth="75.0" text="Athletes"/>
+               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+               </columnResizePolicy>
+            </TableView>
+         </center>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+         </padding>
+      </BorderPane>
+   </Tab>
+   <Tab text="Olympic Games">
+      <BorderPane prefHeight="538.0" prefWidth="796.0">
+         <top>
+            <BorderPane prefHeight="3.0" prefWidth="754.0" BorderPane.alignment="CENTER">
+               <left>
+                  <ChoiceBox fx:id="gameSearchCategory" prefHeight="27.0" prefWidth="100.0"
+                             BorderPane.alignment="CENTER"/>
+               </left>
                <center>
-                  <TableView fx:id="gameTableView" prefHeight="491.0" prefWidth="754.0" BorderPane.alignment="CENTER">
-                     <columns>
-                        <TableColumn fx:id="gameYearColumn" maxWidth="700.0" prefWidth="42.0" text="Year" />
-                        <TableColumn fx:id="gameSeasonColumn" maxWidth="1000.0" prefWidth="182.0" text="Season" />
-                        <TableColumn fx:id="gameCityColumn" maxWidth="2000.0" minWidth="0.0" prefWidth="137.0" text="City" />
-                        <TableColumn fx:id="gameTeamColumn" maxWidth="3000.0" prefWidth="59.0" text="Teams" />
-                        <TableColumn fx:id="gameEventColumn" maxWidth="3000.0" prefWidth="75.0" text="Events" />
-                        <TableColumn fx:id="gameSportColumn" maxWidth="2200.0" prefWidth="75.0" text="Sports" />
-                     </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                  </TableView>
+                  <TextField fx:id="gameSearchField" onKeyReleased="#gameSearch" promptText="Search"
+                             BorderPane.alignment="CENTER"/>
                </center>
                <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                  <Insets bottom="20.0"/>
                </padding>
             </BorderPane>
-         </content>
-      </Tab>
-    <Tab text="New Entry">
-         <content>
-            <GridPane>
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="215.0" minWidth="50.0" prefWidth="65.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="389.0" minWidth="10.0" prefWidth="275.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <Label text="Name" />
-                  <TextField fx:id="nameInputField" promptText="required" GridPane.columnIndex="1" />
-                  <Label text="Sex" GridPane.rowIndex="1" />
-                  <ChoiceBox fx:id="genderInputField" prefHeight="27.0" prefWidth="370.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label text="Birthyear" GridPane.rowIndex="2" />
-                  <TextField fx:id="birthyearInputField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label text="Height" GridPane.rowIndex="3" />
-                  <TextField fx:id="heightInputField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label text="Weight" GridPane.rowIndex="4" />
-                  <TextField fx:id="weightInputField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <Label text="Team" GridPane.rowIndex="5" />
-                  <TextField fx:id="teamInputField" promptText="required" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <Label text="NOC" GridPane.rowIndex="6" />
-                  <TextField fx:id="nocInputField" promptText="required" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <Label text="Year" GridPane.rowIndex="7" />
-                  <TextField fx:id="yearInputField" promptText="required" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <Label text="Season" GridPane.rowIndex="8" />
-                  <ChoiceBox fx:id="seasonInputField" prefHeight="27.0" prefWidth="356.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                  <Label text="City" GridPane.rowIndex="9" />
-                  <TextField fx:id="cityInputField" promptText="required" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                  <Label text="Sport" GridPane.rowIndex="10" />
-                  <TextField fx:id="sportInputField" promptText="required" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-                  <Label text="Event" GridPane.rowIndex="11" />
-                  <TextField fx:id="eventInputField" promptText="required" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-                  <Label text="Medal" GridPane.rowIndex="12" />
-                  <ChoiceBox fx:id="medalInputField" prefHeight="27.0" prefWidth="368.0" GridPane.columnIndex="1" GridPane.rowIndex="12" />
-                  <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="13">
-                     <right>
-                        <Button mnemonicParsing="false" onAction="#create" text="Create!" BorderPane.alignment="CENTER" />
-                     </right>
-                     <center>
-                        <CheckBox fx:id="existsCheckbox" mnemonicParsing="false" onAction="#enableIdField" text="Athlete exists" BorderPane.alignment="CENTER" />
-                     </center>
-                     <left>
-                        <TextField fx:id="idInputField" disable="true" promptText="required when checked" BorderPane.alignment="CENTER" />
-                     </left>
-                  </BorderPane>
-                  <Label text="ID" GridPane.rowIndex="13" />
-               </children>
-               <padding>
-                  <Insets bottom="20.0" left="250.0" right="250.0" top="20.0" />
-               </padding>
-            </GridPane>
-         </content>
-    </Tab>
-  </tabs>
+         </top>
+         <center>
+            <TableView fx:id="gameTableView" prefHeight="491.0" prefWidth="754.0" BorderPane.alignment="CENTER">
+               <columns>
+                  <TableColumn fx:id="gameYearColumn" maxWidth="700.0" prefWidth="42.0" text="Year"/>
+                  <TableColumn fx:id="gameSeasonColumn" maxWidth="1000.0" prefWidth="182.0" text="Season"/>
+                  <TableColumn fx:id="gameCityColumn" maxWidth="2000.0" minWidth="0.0" prefWidth="137.0"
+                               text="City"/>
+                  <TableColumn fx:id="gameTeamColumn" maxWidth="3000.0" prefWidth="59.0" text="Teams"/>
+                  <TableColumn fx:id="gameEventColumn" maxWidth="3000.0" prefWidth="75.0" text="Events"/>
+                  <TableColumn fx:id="gameSportColumn" maxWidth="2200.0" prefWidth="75.0" text="Sports"/>
+               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+               </columnResizePolicy>
+            </TableView>
+         </center>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+         </padding>
+      </BorderPane>
+   </Tab>
+   <Tab text="New Entry">
+      <GridPane>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="215.0" minWidth="50.0" prefWidth="65.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="389.0" minWidth="10.0" prefWidth="275.0"/>
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+         </rowConstraints>
+         <padding>
+            <Insets bottom="20.0" left="250.0" right="250.0" top="20.0"/>
+         </padding>
+         <Label text="Name"/>
+         <TextField fx:id="nameInputField" promptText="required" GridPane.columnIndex="1"/>
+         <Label text="Sex" GridPane.rowIndex="1"/>
+         <ChoiceBox fx:id="genderInputField" prefHeight="27.0" prefWidth="370.0" GridPane.columnIndex="1"
+                    GridPane.rowIndex="1"/>
+         <Label text="Birthyear" GridPane.rowIndex="2"/>
+         <TextField fx:id="birthyearInputField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+         <Label text="Height" GridPane.rowIndex="3"/>
+         <TextField fx:id="heightInputField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+         <Label text="Weight" GridPane.rowIndex="4"/>
+         <TextField fx:id="weightInputField" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+         <Label text="Team" GridPane.rowIndex="5"/>
+         <TextField fx:id="teamInputField" promptText="required" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+         <Label text="NOC" GridPane.rowIndex="6"/>
+         <TextField fx:id="nocInputField" promptText="required" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+         <Label text="Year" GridPane.rowIndex="7"/>
+         <TextField fx:id="yearInputField" promptText="required" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+         <Label text="Season" GridPane.rowIndex="8"/>
+         <ChoiceBox fx:id="seasonInputField" prefHeight="27.0" prefWidth="356.0" GridPane.columnIndex="1"
+                    GridPane.rowIndex="8"/>
+         <Label text="City" GridPane.rowIndex="9"/>
+         <TextField fx:id="cityInputField" promptText="required" GridPane.columnIndex="1" GridPane.rowIndex="9"/>
+         <Label text="Sport" GridPane.rowIndex="10"/>
+         <TextField fx:id="sportInputField" promptText="required" GridPane.columnIndex="1"
+                    GridPane.rowIndex="10"/>
+         <Label text="Event" GridPane.rowIndex="11"/>
+         <TextField fx:id="eventInputField" promptText="required" GridPane.columnIndex="1"
+                    GridPane.rowIndex="11"/>
+         <Label text="Medal" GridPane.rowIndex="12"/>
+         <ChoiceBox fx:id="medalInputField" prefHeight="27.0" prefWidth="368.0" GridPane.columnIndex="1"
+                    GridPane.rowIndex="12"/>
+         <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="13">
+            <right>
+               <Button mnemonicParsing="false" onAction="#createNewEntry" text="Create!"
+                       BorderPane.alignment="CENTER"/>
+            </right>
+            <center>
+               <CheckBox fx:id="existsCheckbox" mnemonicParsing="false" onAction="#enableIdField"
+                         text="Athlete exists" BorderPane.alignment="CENTER"/>
+            </center>
+            <left>
+               <TextField fx:id="idInputField" disable="true" promptText="required when checked"
+                          BorderPane.alignment="CENTER"/>
+            </left>
+         </BorderPane>
+         <Label text="ID" GridPane.rowIndex="13"/>
+      </GridPane>
+   </Tab>
 </TabPane>

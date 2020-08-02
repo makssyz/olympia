@@ -6,15 +6,39 @@ import javafx.scene.control.Control;
 import javafx.scene.control.TextField;
 
 public class Form {
-    Database database;
+    final Database database;
 
-    TextField nameInputField, birthyearInputField, heightInputField, weightInputField, teamInputField,
-            nocInputField, yearInputField, cityInputField, sportInputField, eventInputField, idInputField;
-    ChoiceBox<String> genderInputField, seasonInputField, medalInputField;
-    CheckBox existsCheckbox;
+    final TextField nameInputField;
+    final TextField birthyearInputField;
+    final TextField heightInputField;
+    final TextField weightInputField;
+    final TextField teamInputField;
+    final TextField nocInputField;
+    final TextField yearInputField;
+    final TextField cityInputField;
+    final TextField sportInputField;
+    final TextField eventInputField;
+    final TextField idInputField;
+    final ChoiceBox<String> genderInputField;
+    final ChoiceBox<String> seasonInputField;
+    final ChoiceBox<String> medalInputField;
+    final CheckBox existsCheckbox;
 
-    String name, gender, birthyear, height, weight, team, noc, year, season, city, sport, event, medal, id;
-    boolean exists;
+    final String name;
+    final String gender;
+    String birthyear;
+    String height;
+    String weight;
+    final String team;
+    final String noc;
+    final String year;
+    final String season;
+    final String city;
+    final String sport;
+    final String event;
+    final String medal;
+    final String id;
+    final boolean exists;
 
     public Form(Control[] input, Database database) {
         this.database = database;

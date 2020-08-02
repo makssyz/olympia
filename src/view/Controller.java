@@ -4,7 +4,6 @@ import exceptions.InvalidInputError;
 import items.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -18,7 +17,6 @@ import tools.FormValidator;
 import tools.Serializer;
 import tools.TableFilter;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -40,7 +38,7 @@ public class Controller implements Initializable {
     @FXML private TableColumn<Athlete, MedalList> athleteMedalsColumn;
     @FXML private TextField athleteSearchField;
     @FXML private ChoiceBox<String> athleteSearchCategory;
-    ObservableList<Object> athleteList = FXCollections.observableArrayList();
+    final ObservableList<Object> athleteList = FXCollections.observableArrayList();
 
     /* Team Table View */
     @FXML private TableView<Object> teamTableView;
@@ -49,7 +47,7 @@ public class Controller implements Initializable {
     @FXML private TableColumn<Team, String> teamAthletesColumn;
     @FXML private TextField teamSearchField;
     @FXML private ChoiceBox<String> teamSearchCategory;
-    ObservableList<Object> teamList = FXCollections.observableArrayList();
+    final ObservableList<Object> teamList = FXCollections.observableArrayList();
 
     /* Sport Table View */
     @FXML private TableView<Object> sportTableView;
@@ -57,7 +55,7 @@ public class Controller implements Initializable {
     @FXML private TableColumn<Sport, String> sportEventsColumn;
     @FXML private TextField sportSearchField;
     @FXML private ChoiceBox<String> sportSearchCategory;
-    ObservableList<Object> sportList = FXCollections.observableArrayList();
+    final ObservableList<Object> sportList = FXCollections.observableArrayList();
 
     /* Event Table View */
     @FXML private TableView<Object> eventTableView;
@@ -68,7 +66,7 @@ public class Controller implements Initializable {
     @FXML private TableColumn<Event, String> eventAthletesColumn;
     @FXML private TextField eventSearchField;
     @FXML private ChoiceBox<String> eventSearchCategory;
-    ObservableList<Object> eventList = FXCollections.observableArrayList();
+    final ObservableList<Object> eventList = FXCollections.observableArrayList();
 
     /* Olympic Game Table View */
     @FXML private TableView<Object> gameTableView;
@@ -80,7 +78,7 @@ public class Controller implements Initializable {
     @FXML private TableColumn<OlympicGame, String> gameSportColumn;
     @FXML private TextField gameSearchField;
     @FXML private ChoiceBox<String> gameSearchCategory;
-    ObservableList<Object> gameList = FXCollections.observableArrayList();
+    final ObservableList<Object> gameList = FXCollections.observableArrayList();
 
     /* Create New Entry */
     @FXML private TextField nameInputField;
@@ -104,7 +102,7 @@ public class Controller implements Initializable {
         buildView();
     }
 
-    public void reloadData() throws IOException {
+    public void reloadData() {
         fileHandler = new FileHandler(filenameInputField.getText());
         database = fileHandler.loadData();
         buildView();
@@ -119,7 +117,7 @@ public class Controller implements Initializable {
         buildFrom();
     }
 
-    public void create() {
+    public void createNewEntry() {
 
         Control[] input = {nameInputField, genderInputField, birthyearInputField, heightInputField,
                 weightInputField, teamInputField, nocInputField, yearInputField, seasonInputField,
@@ -127,10 +125,8 @@ public class Controller implements Initializable {
 
         Form form = new Form(input, database);
 
-        FormValidator formValidator = new FormValidator(form);
-
         try {
-            formValidator.validateInput();
+            FormValidator.validateInput(form);
         } catch (InvalidInputError error) {
             Alert invalid = new Alert(Alert.AlertType.WARNING);
             invalid.setHeaderText("Invalid Input");
@@ -139,9 +135,7 @@ public class Controller implements Initializable {
             return;
         }
 
-        Serializer serializer = new Serializer(form);
-
-        String entryLine = serializer.createString();
+        String entryLine = Serializer.createString(form);
         Entry entry = new Entry(entryLine);
 
         Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
@@ -270,6 +264,8 @@ public class Controller implements Initializable {
         cityInputField.clear();
         sportInputField.clear();
         eventInputField.clear();
+        idInputField.clear();
+        existsCheckbox.setSelected(false);
     }
 
 }

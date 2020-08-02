@@ -4,13 +4,13 @@ import items.*;
 
 public class Entry {
 
-    private OlympicGame gameObject;
-    private NOC nocObject;
-    private Team teamObject;
-    private Sport sportObject;
-    private Event eventObject;
-    private Athlete athleteObject;
-    private Medal medalObject;
+    private final OlympicGame gameObject;
+    private final NOC nocObject;
+    private final Team teamObject;
+    private final Sport sportObject;
+    private final Event eventObject;
+    private final Athlete athleteObject;
+    private final Medal medalObject;
 
     private final String id, name, gender, age, height, weight, team, noc, game, year, season, city, sport, event, medal;
 
@@ -104,62 +104,5 @@ public class Entry {
         reference = database.getSportMap().putIfAbsent(sport, sportObject);
         if (reference == null) reference = sportObject;
         ((Sport) reference).addEvent(eventObject);
-
-    }
-
-    public OlympicGame getGameObject() {
-        return gameObject;
-    }
-
-    public void setGameObject(OlympicGame gameObject) {
-        this.gameObject = gameObject;
-    }
-
-    public NOC getNocObject() {
-        return nocObject;
-    }
-
-    public void setNocObject(NOC nocObject) {
-        this.nocObject = nocObject;
-    }
-
-    public Team getTeamObject() {
-        return teamObject;
-    }
-
-    public void setTeamObject(Team teamObject) {
-        this.teamObject = teamObject;
-    }
-
-    public Sport getSportObject() {
-        return sportObject;
-    }
-
-    public void setSportObject(Sport sportObject) {
-        this.sportObject = sportObject;
-    }
-
-    public Event getEventObject() {
-        return eventObject;
-    }
-
-    public void setEventObject(Event eventObject) {
-        this.eventObject = eventObject;
-    }
-
-    public Athlete getAthleteObject() {
-        return athleteObject;
-    }
-
-    public void setAthleteObject(Athlete athleteObject) {
-        this.athleteObject = athleteObject;
-    }
-
-    public Medal getMedalObject() {
-        return medalObject;
-    }
-
-    public void setMedalObject(Medal medalObject) {
-        this.medalObject = medalObject;
     }
 }

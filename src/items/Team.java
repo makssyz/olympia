@@ -5,7 +5,7 @@ import lists.ObjectSet;
 public class Team implements Comparable<Team> {
     private final String name;
     private NOC noc;
-    ObjectSet athletes = new ObjectSet();
+    final ObjectSet athletes = new ObjectSet();
 
     public Team(String team) {
         this.name = team;

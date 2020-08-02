@@ -2,9 +2,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import lists.Database;
-import tools.FileHandler;
 
 public class Main extends Application {
 
@@ -18,6 +17,7 @@ public class Main extends Application {
 
         Scene scene = new Scene(root);
 
+        stage.getIcons().add(new Image("https://image.flaticon.com/icons/svg/3048/3048379.svg"));
         stage.setTitle("Olympia");
         stage.setScene(scene);
         stage.show();

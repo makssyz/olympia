@@ -3,11 +3,11 @@ package items;
 import lists.ObjectSet;
 
 public class Event implements Comparable<Event> {
-    String name;
+    final String name;
     Sport sport;
     OlympicGame olympicGame;
-    ObjectSet athletes = new ObjectSet();
-    ObjectSet winners = new ObjectSet();
+    final ObjectSet athletes = new ObjectSet();
+    final ObjectSet winners = new ObjectSet();
 
     public Event(String event) {
         this.name = event;
